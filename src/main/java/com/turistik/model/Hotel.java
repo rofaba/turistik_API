@@ -1,0 +1,27 @@
+package com.turistik.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Table(name = "hoteles")
+@Data
+public class Hotel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    private int estrellas; // calificaciones de 1 a 5
+
+    private double precioNoche;
+
+    private String direccion;
+
+    private boolean tienePiscina;
+
+    private String ciudad;
+
+}

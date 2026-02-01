@@ -1,7 +1,9 @@
 package com.turistik.service;
 
 import com.turistik.dto.PoiResponseDTO;
+import com.turistik.model.Hotel;
 import com.turistik.model.Poi;
+import com.turistik.repository.HotelRepository;
 import com.turistik.repository.PoiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +22,8 @@ public class PoiService {
 
     @Autowired
     private PoiRepository poiRepository;
+    @Autowired
+    private HotelRepository hotelRepository;
 
     @Value("${api.weather.key}")
     private String apiKey;
@@ -58,38 +62,46 @@ public class PoiService {
      */
 
     public PoiResponseDTO obtenerPoiEnriquecido(Long id) {
-
-        // Busca el POI en la DB (Docker)
+        // Busqueda en DB local de Docker
         Poi poi = poiRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("El punto de interes con ID " + id + " no existe."));
+                .orElseThrow(() -> new RuntimeException("El punto de interés con ID " + id + " no existe."));
 
-        // LLama a la API del tiempo
+        // Llamada a OpenWeatherMap
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> response = restTemplate.getForObject(WEATHER_URL, Map.class,
                 poi.getLatitud(), poi.getLongitud(), apiKey);
 
-        // Extrae los datos del JSON de OpenWeatherMap
+        // Conseguir data del clima desde la respuesta API externa
         Map<String, Object> main = (Map<String, Object>) response.get("main");
         Double temp = Double.valueOf(main.get("temp").toString());
-
         List<Map<String, Object>> weatherList = (List<Map<String, Object>>) response.get("weather");
-        String descripcion = weatherList.get(0).get("description").toString();
+        String descripcionClima = weatherList.get(0).get("description").toString();
         String climaPrincipal = weatherList.get(0).get("main").toString().toLowerCase();
 
-        // Logica de recomendación
+
+        // Búsqueda de hoteles en la ciduad del POI
+        List<Hotel> hoteles = hotelRepository.findByCiudad(poi.getCiudad());
+
+        // Montaje del DTO con TODO lo que tenemos
         PoiResponseDTO dto = new PoiResponseDTO();
         dto.setId(poi.getId());
         dto.setNombre(poi.getNombre());
-        dto.setClimaActual(descripcion.substring(0, 1).toUpperCase() + descripcion.substring(1) + ", " + temp + "°C");
+        dto.setCategoria(poi.getCategoria());
+        dto.setDescripcion(poi.getDescripcion());
+        dto.setImagenUrl(poi.getImage_url());
+        dto.setClimaActual(descripcionClima + ", " + temp + "°C");
+        dto.setHotelesCercanos(hoteles);
 
-        // Ahora la pregunta: plan interior o exterior
-        boolean esLluvia = climaPrincipal.contains("rain") || climaPrincipal.contains("drizzle") || climaPrincipal.contains("thunderstorm");
+        // Recomendación personalizada con el nombre del sitio
+        boolean esLluvia = climaPrincipal.contains("rain") || climaPrincipal.contains("drizzle");
 
         if (esLluvia) {
-            dto.setRecomendacion("Esta lloviendo en la zona. " +
-                    (poi.getCategoria().equalsIgnoreCase("Museo") ? "Es el momento perfecto para visitar este museo y no mojarse." : "Mejor busca un plan de interior."));
+            dto.setRecomendacion("Está lloviendo en la zona. " +
+                    (poi.getCategoria().equalsIgnoreCase("Monumento") ?
+                            "Como " + poi.getNombre() + " es al aire libre, mejor lleva paraguas o visita un museo cercano." :
+                            "Buen momento para disfrutar de " + poi.getNombre() + " ya que es un lugar cubierto."));
         } else {
-            dto.setRecomendacion("El tiempo es perfecto para disfrutar de " + poi.getNombre() + " al aire libre.");
+            dto.setRecomendacion("¡Día espléndido! Es el momento perfecto para recorrer " + poi.getNombre() + " y hacer fotos increíbles.");
         }
 
         return dto;

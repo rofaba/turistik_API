@@ -32,5 +32,8 @@ public class Poi {
     private Double longitud;
 
     private String categoria;
+
     private String image_url;
+
+    private String ciudad;
 }
