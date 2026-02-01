@@ -80,7 +80,7 @@ public class PoiService {
 
 
         // Búsqueda de hoteles en la ciduad del POI
-        List<Hotel> hoteles = hotelRepository.findByCiudad(poi.getCiudad());
+        List<Hotel> hoteles = hotelRepository.findByCiudadIgnoreCase(poi.getCiudad());
 
         // Montaje del DTO con TODO lo que tenemos
         PoiResponseDTO dto = new PoiResponseDTO();

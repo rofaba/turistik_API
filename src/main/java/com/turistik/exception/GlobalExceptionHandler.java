@@ -1,5 +1,6 @@
 package com.turistik.exception;
 
+import com.turistik.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -18,47 +19,47 @@ import java.util.Map;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-/*  Maneja las RuntimeExceptions lanzadas en la aplicación.
-    Devuelve un cuerpo de respuesta con marca de tiempo,
-    mensaje de error y código personalizado. */
 
+    /*  Maneja excepciones de tipo RuntimeException.
+    Devuelve un DTO con detalles del error y
+    un código HTTP 404 (Not Found). */
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleRuntimeException(RuntimeException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("mensaje", ex.getMessage());
-        body.put("codigo", "ERROR_RECURSO");
-
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponseDTO> handleRuntimeException(RuntimeException ex) {
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .mensaje(ex.getMessage())
+                .codigo("ERROR_RECURSO")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-    /*  Maneja errores de validación de argumentos en las solicitudes.
-        Devuelve un cuerpo de respuesta con detalles de los errores
-        de validación. */
 
+/*  Maneja errores de validación de argumentos.
+    Devuelve un DTO con detalles de los errores de validación
+    y un código HTTP 400 (Bad Request). */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponseDTO> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errores = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errores.put(error.getField(), error.getDefaultMessage())
-        );
+        ex.getBindingResult().getFieldErrors().forEach(e -> errores.put(e.getField(), e.getDefaultMessage()));
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("mensaje", "Datos de entrada inválidos");
-        body.put("detalles", errores);
-
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .mensaje("Datos de entrada inválidos")
+                .detalles(errores)
+                .codigo("ERROR_VALIDACION")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-    /*  Maneja excepciones de acceso denegado.
-        Devuelve un cuerpo de respuesta indicando que el usuario
-        no tiene permisos para realizar la acción solicitada. */
 
+/*  Maneja excepciones de acceso denegado.
+    Devuelve un DTO con un mensaje de error
+    y un código HTTP 403 (Forbidden). */
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Object> handleAccessDenied(AccessDeniedException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("mensaje", "No tienes permisos para realizar esta acción.");
-
-        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+    public ResponseEntity<ErrorResponseDTO> handleAccessDenied(AccessDeniedException ex) {
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .mensaje("No tienes permisos para realizar esta acción.")
+                .codigo("ERROR_SEGURIDAD")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 }

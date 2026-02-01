@@ -8,7 +8,7 @@ import java.util.List;
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     List<Hotel> findByEstrellasGreaterThanEqual(int estrellas);
-    List<Hotel> findByCiudad(String ciudad);
+    List<Hotel> findByCiudadIgnoreCase(String ciudad);
 
 
 
