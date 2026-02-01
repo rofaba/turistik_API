@@ -1,6 +1,10 @@
 package com.turistik.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 /**
@@ -9,23 +13,24 @@ import lombok.*;
  */
 @Entity
 @Table(name = "pois")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 public class Poi {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
 
-    @Column(length = 1000)
+    @Size(max = 1000, message = "La descripción es demasiado larga")
     private String descripcion;
 
-    private String categoria; // Ejemplo: Museos, Parques [cite: 40]
-
+    @DecimalMin(value = "-90.0") @DecimalMax(value = "90.0")
     private Double latitud;
+
+    @DecimalMin(value = "-180.0") @DecimalMax(value = "180.0")
     private Double longitud;
 
-    private String imagenUrl;
+    private String categoria;
+    private String image_url;
 }

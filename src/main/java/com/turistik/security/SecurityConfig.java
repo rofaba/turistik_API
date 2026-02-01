@@ -17,16 +17,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Deshabilitar para facilitar pruebas iniciales
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Permitir acceso público a Swagger y documentación
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        // Los GET de la API son públicos [cite: 10, 33]
+                        // Permitimos la interfaz y los docs internos
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        // Los GET de la API son públicos
                         .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
-                        // Cualquier POST/PUT/DELETE requiere autenticación
+                        // El resto protegido
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults()); // Usa autenticación básica para el testeo
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }

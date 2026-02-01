@@ -3,6 +3,7 @@ package com.turistik.controller;
 import com.turistik.dto.PoiResponseDTO;
 import com.turistik.model.Poi;
 import com.turistik.service.PoiService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -23,9 +24,8 @@ public class PoiController {
     public List<Poi> listarPois() {
         return poiService.obtenerTodos();
     }
-
     @PostMapping
-    public Poi crearPoi(@RequestBody Poi poi) {
+    public Poi crearPoi(@Valid @RequestBody Poi poi) {
         return poiService.guardar(poi);
     }
 
