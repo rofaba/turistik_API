@@ -1,6 +1,7 @@
 package com.turistik.dto;
 
 import com.turistik.model.Hotel;
+import com.turistik.model.Restaurant;
 import lombok.Data;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public class PoiResponseDTO {
     private String recomendacion;
 
     private List<Hotel> hotelesCercanos;
+    private List<Restaurant> restaurantesCercanos;
 }

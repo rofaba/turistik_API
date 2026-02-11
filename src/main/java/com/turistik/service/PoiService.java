@@ -3,9 +3,11 @@ package com.turistik.service;
 import com.turistik.dto.PoiResponseDTO;
 import com.turistik.model.Hotel;
 import com.turistik.model.Poi;
+import com.turistik.model.Restaurant; // No olvides importar el modelo
 import com.turistik.repository.HotelRepository;
 import com.turistik.repository.PoiRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.turistik.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,76 +15,54 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Servicio que gestiona la lógica de negocio de los Puntos de Interés.
- * Proporciona una capa intermedia entre el controlador y el repositorio[cite: 46].
- */
 @Service
+@RequiredArgsConstructor // Genera el constructor para los campos 'final' (Inyección limpia)
 public class PoiService {
 
-    @Autowired
-    private PoiRepository poiRepository;
-    @Autowired
-    private HotelRepository hotelRepository;
+    // Al ser final y usar @RequiredArgsConstructor, no necesitas @Autowired manual
+    private final PoiRepository poiRepository;
+    private final HotelRepository hotelRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Value("${api.weather.key}")
     private String apiKey;
 
     private final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}&units=metric&lang=es";
 
-    /**
-     * Obtiene todos los Puntos de Interés almacenados en la base de datos.
-     * @return Lista de POIs.
-     */
-
     public List<Poi> obtenerTodos() {
         return poiRepository.findAll();
     }
 
-    /**
-     * Guarda un nuevo Punto de Interés en la base de datos.
-     * @param poi El POI a guardar.
-     * @return El POI guardado.
-     * @throws RuntimeException si el POI ya existe.
-     */
-
     public Poi guardar(Poi poi) {
-        // Si el usuario envía un ID en un POST comprobamos si ya existe
         if (poi.getId() != null && poiRepository.existsById(poi.getId())) {
-            throw new RuntimeException("Error: El POI con ID " + poi.getId() + " ya existe. Usa PUT para actualizar.");
+            throw new RuntimeException("Error: El POI con ID " + poi.getId() + " ya existe.");
         }
         return poiRepository.save(poi);
     }
 
-    /** Implementación del método para obtener POI enriquecido
-     * Obtiene un POI definido con y según los datos de la API en tiempo real.
-     * @param id ID del POI.
-     * @return DTO con información del POI y datos adicionales.
-     * @throws RuntimeException si el POI no existe.
-     */
-
     public PoiResponseDTO obtenerPoiEnriquecido(Long id) {
-        // Busqueda en DB local de Docker
+        // 1. Busqueda en DB local
         Poi poi = poiRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("El punto de interés con ID " + id + " no existe."));
 
-        // Llamada a OpenWeatherMap
+        // 2. Llamada a OpenWeatherMap
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> response = restTemplate.getForObject(WEATHER_URL, Map.class,
                 poi.getLatitud(), poi.getLongitud(), apiKey);
 
-        // Conseguir data del clima desde la respuesta API externa
+        // Extraer datos del clima
         Map<String, Object> main = (Map<String, Object>) response.get("main");
         Double temp = Double.valueOf(main.get("temp").toString());
         List<Map<String, Object>> weatherList = (List<Map<String, Object>>) response.get("weather");
         String descripcionClima = weatherList.get(0).get("description").toString();
         String climaPrincipal = weatherList.get(0).get("main").toString().toLowerCase();
 
-
-        // Búsqueda de hoteles en la ciduad del POI
+        // 3. Búsqueda de Hoteles Y Restaurantes por la CIUDAD del POI
+        // Asegúrate de que los nombres de los métodos coincidan con tus Repositories
         List<Hotel> hoteles = hotelRepository.findByCiudadIgnoreCase(poi.getCiudad());
+        List<Restaurant> restaurantes = restaurantRepository.findByCityIgnoreCase(poi.getCiudad());
 
-        // Montaje del DTO con TODO lo que tenemos
+        // 4. Montaje del DTO
         PoiResponseDTO dto = new PoiResponseDTO();
         dto.setId(poi.getId());
         dto.setNombre(poi.getNombre());
@@ -90,20 +70,48 @@ public class PoiService {
         dto.setDescripcion(poi.getDescripcion());
         dto.setImagenUrl(poi.getImage_url());
         dto.setClimaActual(descripcionClima + ", " + temp + "°C");
-        dto.setHotelesCercanos(hoteles);
 
-        // Recomendación personalizada con el nombre del sitio
+        dto.setHotelesCercanos(hoteles);
+        dto.setRestaurantesCercanos(restaurantes);
+
+        // 5. Lógica de recomendación
         boolean esLluvia = climaPrincipal.contains("rain") || climaPrincipal.contains("drizzle");
 
         if (esLluvia) {
             dto.setRecomendacion("Está lloviendo en la zona. " +
                     (poi.getCategoria().equalsIgnoreCase("Monumento") ?
-                            "Como " + poi.getNombre() + " es al aire libre, mejor lleva paraguas o visita un museo cercano." :
-                            "Buen momento para disfrutar de " + poi.getNombre() + " ya que es un lugar cubierto."));
+                            "Como " + poi.getNombre() + " es al aire libre, mejor lleva paraguas." :
+                            "Buen momento para disfrutar de " + poi.getNombre() + " ya que es cubierto."));
         } else {
-            dto.setRecomendacion("¡Día espléndido! Es el momento perfecto para recorrer " + poi.getNombre() + " y hacer fotos increíbles.");
+            dto.setRecomendacion("¡Día espléndido! Perfecto para visitar " + poi.getNombre());
         }
 
         return dto;
+    }
+    // Método para actualizar un POI existente
+    public Poi actualizar(Long id, Poi datosNuevos) {
+        // 1. Verificamos si existe antes de intentar hacer nada
+        Poi poiExistente = poiRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se puede actualizar: El POI con ID " + id + " no existe."));
+
+        // 2. Actualizamos los campos (puedes elegir cuáles permitir cambiar)
+        poiExistente.setNombre(datosNuevos.getNombre());
+        poiExistente.setDescripcion(datosNuevos.getDescripcion());
+        poiExistente.setCategoria(datosNuevos.getCategoria());
+        poiExistente.setCiudad(datosNuevos.getCiudad());
+        poiExistente.setLatitud(datosNuevos.getLatitud());
+        poiExistente.setLongitud(datosNuevos.getLongitud());
+        poiExistente.setImage_url(datosNuevos.getImage_url());
+
+        // 3. Guardamos los cambios
+        return poiRepository.save(poiExistente);
+    }
+
+    // Método para eliminar un POI
+    public void eliminar(Long id) {
+        if (!poiRepository.existsById(id)) {
+            throw new RuntimeException("No se puede eliminar: El POI con ID " + id + " no existe.");
+        }
+        poiRepository.deleteById(id);
     }
 }

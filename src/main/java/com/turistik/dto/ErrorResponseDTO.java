@@ -11,5 +11,5 @@ public class ErrorResponseDTO {
     private LocalDateTime timestamp;
     private String mensaje;
     private String codigo;
-    private Map<String, String> detalles; // Para los errores de validación
+    private Map<String, String> detalles; // Para los errores de validación de campos
 }

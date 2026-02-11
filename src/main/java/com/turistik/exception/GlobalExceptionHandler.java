@@ -62,4 +62,16 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
+
+    /* Maneja cualquier otra excepción no controlada.
+   Devuelve un HTTP 500 (Internal Server Error). */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDTO> handleGlobalException(Exception ex) {
+        ErrorResponseDTO error = ErrorResponseDTO.builder()
+                .timestamp(LocalDateTime.now())
+                .mensaje("Ha ocurrido un error inesperado en el servidor.")
+                .codigo("ERROR_INTERNO")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
