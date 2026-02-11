@@ -33,5 +33,21 @@ public class HotelController {
         Hotel nuevo = hotelService.guardar(hotel);
         return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
     }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Hotel> actualizarHotel(@PathVariable Long id, @RequestBody Hotel hotel) {
+        Hotel actualizado = hotelService.actualizar(id, hotel);
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<java.util.Map<String, String>> eliminarHotel(@PathVariable Long id) {
+        hotelService.eliminar(id);
+
+        java.util.Map<String, String> respuesta = new java.util.HashMap<>();
+        respuesta.put("mensaje", "Hotel eliminado correctamente con ID: " + id);
+        return ResponseEntity.ok(respuesta);
+    }
 }
 

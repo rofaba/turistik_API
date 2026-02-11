@@ -25,4 +25,33 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> guardar(@RequestBody Restaurant restaurant) {
         return new ResponseEntity<>(restaurantService.guardar(restaurant), HttpStatus.CREATED);
     }
+    // Actualiza tu RestaurantController.java con estos métodos adicionales
+
+    @GetMapping("/buscar")
+    public List<Restaurant> buscarPorCiudad(@RequestParam String city) {
+        return restaurantService.buscarPorCiudad(city);
+    }
+
+    @GetMapping("/cocina")
+    public List<Restaurant> buscarPorCocina(@RequestParam String city, @RequestParam String cuisine) {
+        return restaurantService.buscarPorCocina(city, cuisine);
+    }
+
+    @GetMapping("/top")
+    public List<Restaurant> obtenerMejores(@RequestParam String city) {
+        return restaurantService.obtenerMejores(city);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurant> actualizar(@PathVariable Long id, @RequestBody Restaurant restaurant) {
+        return ResponseEntity.ok(restaurantService.actualizar(id, restaurant));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<java.util.Map<String, String>> eliminar(@PathVariable Long id) {
+        restaurantService.eliminar(id);
+        java.util.Map<String, String> response = new java.util.HashMap<>();
+        response.put("message", "Restaurante eliminado con éxito");
+        return ResponseEntity.ok(response);
+    }
 }

@@ -33,4 +33,28 @@ public class RestaurantService {
     public List<Restaurant> obtenerMejores(String city) {
         return restaurantRepository.findByCityIgnoreCaseAndRatingGreaterThanEqual(city, 4.5);
     }
+    // Añade esto a tu RestaurantService.java
+
+    public Restaurant actualizar(Long id, Restaurant datosNuevos) {
+        // Verificamos si existe en la base de datos
+        Restaurant existente = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se puede actualizar: El restaurante con ID " + id + " no existe."));
+
+        // Actualizamos los campos
+        existente.setName(datosNuevos.getName());
+        existente.setCity(datosNuevos.getCity());
+        existente.setCuisineType(datosNuevos.getCuisineType());
+        existente.setRating(datosNuevos.getRating());
+        existente.setAddress(datosNuevos.getAddress());
+        existente.setAveragePrice(datosNuevos.getAveragePrice());
+
+        return restaurantRepository.save(existente);
+    }
+
+    public void eliminar(Long id) {
+        if (!restaurantRepository.existsById(id)) {
+            throw new RuntimeException("No se puede eliminar: El restaurante con ID " + id + " no existe.");
+        }
+        restaurantRepository.deleteById(id);
+    }
 }
