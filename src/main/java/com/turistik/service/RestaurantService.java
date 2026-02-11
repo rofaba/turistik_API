@@ -25,6 +25,7 @@ public class RestaurantService {
         // Podrías añadir validaciones aquí, como verificar si ya existe
         return restaurantRepository.save(restaurant);
     }
+
     // Añade esto a tu RestaurantService
     public List<Restaurant> buscarPorCocina(String city, String cuisine) {
         return restaurantRepository.findByCityIgnoreCaseAndCuisineTypeIgnoreCase(city, cuisine);
@@ -57,4 +58,10 @@ public class RestaurantService {
         }
         restaurantRepository.deleteById(id);
     }
+
+    public Restaurant buscarPorId(Long id) {
+        return restaurantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Restaurante no encontrado con ID: " + id));
+    }
+
 }

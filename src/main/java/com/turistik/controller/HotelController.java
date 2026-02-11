@@ -49,5 +49,12 @@ public class HotelController {
         respuesta.put("mensaje", "Hotel eliminado correctamente con ID: " + id);
         return ResponseEntity.ok(respuesta);
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Hotel> getHotelById(@PathVariable Long id) {
+        Hotel hotel = hotelService.buscarPorId(id);
+        return ResponseEntity.ok(hotel);
+    }
 }
 

@@ -47,4 +47,9 @@ public class HotelService {
             }
             hotelRepository.deleteById(id);
         }
+
+    public Hotel buscarPorId(Long id) {
+        return hotelRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hotel no encontrado con ID: " + id));
+    }
     }

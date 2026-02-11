@@ -54,4 +54,11 @@ public class RestaurantController {
         response.put("message", "Restaurante eliminado con éxito");
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Restaurant> obtenerPorId(@PathVariable Long id) {
+        Restaurant restaurant = restaurantService.buscarPorId(id);
+        return ResponseEntity.ok(restaurant);
+
+    }
 }
