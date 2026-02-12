@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/** * Servicio para gestionar las actividades turísticas. * Proporciona métodos para listar, buscar por ciudad, guardar, buscar cercanos y eliminar actividades. */
+
 @Service
 @RequiredArgsConstructor
 public class ActivityService {

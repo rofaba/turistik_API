@@ -1,12 +1,17 @@
 package com.turistik.service;
 
-import com.turistik.model.Hotel;
+
 import com.turistik.model.Restaurant;
 import com.turistik.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/** * Servicio para manejar la lógica de negocio relacionada con los restaurantes.
+ * * Se encarga de interactuar con el repositorio para realizar operaciones CRUD
+ * * y otras consultas específicas. */
+
 
 @Service
 @RequiredArgsConstructor

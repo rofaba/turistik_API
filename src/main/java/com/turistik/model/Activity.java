@@ -3,6 +3,8 @@ package com.turistik.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/** * Representa una actividad turística (tours, eventos, experiencias) que los usuarios pueden reservar. */
+
 @Entity
 @Data
 public class Activity {

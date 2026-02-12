@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/** Controlador REST para gestionar las funcionalidades relacionadas con el turismo.
+ * * Proporciona endpoints para obtener información turística cercana a una ubicación específica. */
+
 @RestController
 @RequestMapping("/api/v1/turismo")
 public class TurismoController {

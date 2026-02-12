@@ -9,6 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+/** Controlador REST para gestionar los restaurantes.
+ * * Proporciona endpoints para listar, buscar por ciudad, buscar por tipo de cocina,
+ * obtener los mejores restaurantes, crear, actualizar y eliminar restaurantes. */
+
 @RestController
 @RequestMapping("/api/restaurants")
 public class RestaurantController {

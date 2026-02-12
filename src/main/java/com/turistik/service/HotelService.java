@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/** * Servicio para gestionar operaciones relacionadas con hoteles.
+ * * Proporciona métodos para listar, buscar, guardar, actualizar y eliminar hoteles.
+ * * También incluye funcionalidad para buscar hoteles cercanos a una ubicación dada. */
+
 @Service
 @RequiredArgsConstructor
 public class HotelService {

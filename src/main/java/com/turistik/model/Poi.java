@@ -11,6 +11,7 @@ import lombok.*;
  * Representa un Punto de Interés turístico (monumentos, museos, parques)
  * almacenados en los recursos del servidor.
  */
+
 @Entity
 @Table(name = "pois")
 @Getter @Setter

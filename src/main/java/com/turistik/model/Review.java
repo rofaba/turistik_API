@@ -3,6 +3,8 @@ package com.turistik.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/** * Representa una reseña que los usuarios pueden dejar para hoteles, restaurantes o puntos de interés. */
+
 @Entity
 @Data
 public class Review {

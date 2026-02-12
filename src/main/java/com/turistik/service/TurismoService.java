@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+/** Servicio centralizado para obtener información turística. Este servicio se encarga de coordinar las consultas
+ *  a los diferentes servicios (POI, hoteles, restaurantes, actividades) para proporcionar una respuesta unificada al cliente. */
+
 @Service
 @RequiredArgsConstructor
 public class TurismoService {

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** * Controlador REST para gestionar los hoteles.
+ * * Proporciona endpoints para listar, buscar por ciudad, crear, actualizar y eliminar hoteles. */
+
 @RestController
 @RequestMapping("/api/v1/hoteles")
 public class HotelController {

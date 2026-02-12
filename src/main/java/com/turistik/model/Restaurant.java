@@ -3,6 +3,8 @@ package com.turistik.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/** * Representa un restaurante turístico que los usuarios pueden visitar. */
+
 @Entity
 @Data
 public class Restaurant {

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** * Controlador REST para gestionar las actividades turísticas.
+ * * Proporciona endpoints para listar, buscar por ciudad y crear nuevas actividades. */
+
 @RestController
 @RequestMapping("/api/v1/actividades")
 public class ActivityController {

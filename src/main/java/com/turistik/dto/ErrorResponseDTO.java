@@ -5,6 +5,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+/** DTO para representar la estructura de una respuesta de error en la API.
+ * Incluye un timestamp, mensaje de error, código y detalles adicionales (como errores de validación). */
+
 @Data
 @Builder
 public class ErrorResponseDTO {

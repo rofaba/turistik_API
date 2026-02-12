@@ -3,6 +3,8 @@ package com.turistik.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/** * Representa un hotel turístico que los usuarios pueden reservar. */
+
 @Entity
 @Table(name = "hoteles")
 @Data

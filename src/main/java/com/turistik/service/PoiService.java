@@ -15,6 +15,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 
+/** * Servicio para gestionar los Puntos de Interés (POIs).
+ * * Proporciona métodos para obtener, guardar, actualizar, eliminar y buscar POIs cercanos.
+ * * Además, enriquece la información del POI con datos del clima y recomendaciones. */
+
 @Service
 @RequiredArgsConstructor // Genera el constructor para los campos 'final' (Inyección limpia)
 public class PoiService {
