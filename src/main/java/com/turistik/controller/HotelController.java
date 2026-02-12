@@ -25,7 +25,7 @@ public class HotelController {
         return hotelService.listarTodos();
     }
 
-    // Endpoint clave: Buscar hoteles en una ciudad específica
+    /** Endpoint clave: Buscar hoteles en una ciudad específica */
     @GetMapping("/buscar")
     public List<Hotel> getHotelesPorCiudad(@RequestParam String ciudad) {
         return hotelService.buscarPorCiudad(ciudad);

@@ -14,11 +14,25 @@ import java.util.List;
 @Repository
 public interface PoiRepository extends JpaRepository<Poi, Long> {
 
+
     @Query(value = "SELECT * FROM pois p WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(p.latitud)) * " +
             "cos(radians(p.longitud) - radians(:lng)) + sin(radians(:lat)) * " +
             "sin(radians(p.latitud)))) <= :distancia",
             nativeQuery = true)
+    /**
+     * Recupera una lista de puntos de interés cercanos a una ubicación dada.
+     * @param lat Latitud del punto de referencia.
+     * @param lng Longitud del punto de referencia.
+     * @param distancia Distancia máxima en kilómetros para considerar un POI como cercano.
+     * @return Lista de POIs encontrados dentro de la distancia especificada.
+     */
     List<Poi> buscarCercanos(@Param("lat") double lat, @Param("lng") double lng, @Param("distancia") double distancia);
 
+    /**
+     * Recupera una lista de puntos de interés filtrados por el nombre de la ciudad.
+     * @param ciudad Nombre de la ciudad (ej: Málaga, Sevilla).
+     * @return Lista de POIs encontrados.
+     */
+    List<Poi> findByCiudadIgnoreCase(String ciudad);
 }

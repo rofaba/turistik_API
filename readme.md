@@ -58,21 +58,23 @@ Se ha implementado una política de seguridad basada en el principio de menor pr
 ------------------------
 ### 📍 Catálogo Completo de Endpoints
 
-| Recurso Principal | Método | Endpoint | Descripción | Acceso |
-| :--- | :--- | :--- | :--- | :--- |
-| **Turismo (Global)** | `GET` | `/api/v1/turismo/cerca` | **Búsqueda Geoespacial:** Hoteles, POIs, Restaurantes y Actividades en un radio. | **Público** |
-| **Hoteles** | `GET` | `/hoteles` | Listado completo de hoteles (Sevilla, Málaga, Granada, Cádiz, etc.). | **Público** |
-| **Hoteles** | `GET` | `/hoteles/{id}` | Obtener detalles completos de un hotel específico. | **Público** |
-| **Hoteles** | `POST` | `/hoteles` | Registrar un nuevo establecimiento (Ej: Hotel ME Málaga Piqué). | 🔒 **Admin** |
-| **Hoteles** | `PUT` | `/hoteles/{id}` | Actualizar precios o estrellas de un hotel. | 🔒 **Admin** |
-| **Hoteles** | `DELETE` | `/hoteles/{id}` | Eliminar un registro de hotel. | 🔒 **Admin** |
-| **Restaurantes** | `GET` | `/restaurantes` | Listar toda la oferta gastronómica (150 registros). | **Público** |
-| **Restaurantes** | `POST` | `/restaurantes` | Añadir un nuevo restaurante al catálogo. | 🔒 **Admin** |
-| **Puntos Interés** | `GET` | `/pois` | Listar monumentos, museos y parques andaluces. | **Público** |
-| **Puntos Interés** | `POST` | `/pois` | Dar de alta un nuevo monumento. | 🔒 **Admin** |
+| Recurso Principal | Método    | Endpoint                | Descripción                                                                      | Acceso |
+| :--- |:----------|:------------------------|:---------------------------------------------------------------------------------| :--- |
+| **Turismo (Global)** | `GET`     | `/api/v1/turismo/cerca` | **Búsqueda Geoespacial:** Hoteles, POIs, Restaurantes y Actividades en un radio. | **Público** |
+| **Hoteles** | `GET`     | `/hoteles`              | Listado completo de hoteles (Sevilla, Málaga, Granada, Cádiz, etc.).             | **Público** |
+| **Hoteles** | `GET`     | `/hoteles/{id}`         | Obtener detalles completos de un hotel específico.                               | **Público** |
+| **Hoteles** | `POST`    | `/hoteles`              | Registrar un nuevo establecimiento (Ej: Hotel ME Málaga Piqué).                  | 🔒 **Admin** |
+| **Hoteles** | `PUT`     | `/hoteles/{id}`         | Actualizar precios o estrellas de un hotel.                                      | 🔒 **Admin** |
+| **Hoteles** | `DELETE`  | `/hoteles/{id}`         | Eliminar un registro de hotel.                                                   | 🔒 **Admin** |
+| **Restaurantes** | `GET`     | `/restaurantes`         | Listar toda la oferta gastronómica (150 registros).                              | **Público** |
+| **Restaurantes** | `POST`    | `/restaurantes`         | Añadir un nuevo restaurante al catálogo.                                         | 🔒 **Admin** |
+| **Puntos Interés** | `GET`     | `/pois`                 | Listar monumentos, museos y parques andaluces.                                   | **Público** |
+| **Puntos Interés** | `POST`    | `/pois`                 | Dar de alta un nuevo monumento.                                                  | 🔒 **Admin** |
+| **Puntos Interés** | `GET` | `/ciudad`           | LIstar pois por ciudad determinada                | 🔒 **Admin** |
 | **Actividades** | `GET` | `/actividades` | Listar planes de ocio, tours y talleres. | **Público** |
 | **Actividades** | `POST` | `/actividades` | Crear una nueva oferta de actividad turística. | 🔒 **Admin** |
-🌟 Mejoras e Innovación (Sección 20%)
+
+🌟 Mejoras e Innovación
 -------------------------------------
 
 Este proyecto incluye funcionalidades avanzadas que mejoran la experienciadel usuario y la calidad de los datos, destacando:

@@ -28,15 +28,46 @@ public class PoiController {
     public List<Poi> listarPois() {
         return poiService.obtenerTodos();
     }
+
+    /**
+     * Endpoint para obtener todos los puntos de interés de una ciudad.
+     * Acceso: Público.
+     * @param ciudad Nombre de la ciudad.
+     * @return ResponseEntity con la lista de POIs.
+     */
+    @GetMapping("/{ciudad}")
+    public ResponseEntity<List<Poi>> getPoisPorCiudad(@PathVariable String ciudad) {
+        List<Poi> pois = poiService.listarPorCiudad(ciudad);
+        return ResponseEntity.ok(pois);
+    }
+
+    /**
+     * Endpoint para crear un nuevo punto de interés.
+     * Acceso: Público.
+     * @param poi Objeto POI a crear.
+     * @return ResponseEntity con el POI creado.
+     */
     @PostMapping
     public Poi crearPoi(@Valid @RequestBody Poi poi) {
         return poiService.guardar(poi);
     }
 
+    /**
+     * Endpoint para obtener el detalle enriquecido de un POI por su ID.
+     * Acceso: Público.
+     * @param id ID del POI.
+     * @return ResponseEntity con el detalle enriquecido del POI.
+     */
     @GetMapping("/{id}")
     public PoiResponseDTO obtenerDetalle(@PathVariable Long id) {
         return poiService.obtenerPoiEnriquecido(id);
     }
+/** Endpoint para actualizar un POI existente.
+     * Acceso: Público.
+     * @param id ID del POI a actualizar.
+     * @param poiActualizado Objeto POI con los datos actualizados.
+     * @return ResponseEntity con el POI actualizado.
+     */
 
     @PutMapping("/{id}")
     public ResponseEntity<Poi> actualizarPoi(@PathVariable Long id, @RequestBody Poi poiActualizado) {
@@ -44,11 +75,16 @@ public class PoiController {
         return ResponseEntity.ok(poi);
     }
 
+    /** Endpoint para eliminar un POI por su ID.
+     * Acceso: Público.
+     * @param id ID del POI a eliminar.
+     * @return ResponseEntity con un mensaje de confirmación.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminarPoi(@PathVariable Long id) {
         poiService.eliminar(id);
 
-        // Devolvemos un mensaje JSON limpio confirmando la eliminación
+        // Devolvemos un mensaje JSON confirmando la eliminación
         Map<String, String> respuesta = new HashMap<>();
         respuesta.put("mensaje", "POI eliminado correctamente con ID: " + id);
         return ResponseEntity.ok(respuesta);

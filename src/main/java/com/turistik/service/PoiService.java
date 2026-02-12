@@ -20,10 +20,9 @@ import java.util.Map;
  * * Además, enriquece la información del POI con datos del clima y recomendaciones. */
 
 @Service
-@RequiredArgsConstructor // Genera el constructor para los campos 'final' (Inyección limpia)
+@RequiredArgsConstructor
 public class PoiService {
 
-    // Al ser final y usar @RequiredArgsConstructor, no necesitas @Autowired manual
     private final PoiRepository poiRepository;
     private final HotelRepository hotelRepository;
     private final RestaurantRepository restaurantRepository;
@@ -43,13 +42,15 @@ public class PoiService {
         }
         return poiRepository.save(poi);
     }
+/** Métod clave: Obtiene un POI enriquecido con datos del clima,
+ * hoteles y restaurantes cercanos, y recomendaciones. */
 
     public PoiResponseDTO obtenerPoiEnriquecido(Long id) {
-        // 1. Busqueda en DB local
+        // Busqueda en DB local
         Poi poi = poiRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("El punto de interés con ID " + id + " no existe."));
 
-        // 2. Llamada a OpenWeatherMap
+        // Llamada a OpenWeatherMap
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> response = restTemplate.getForObject(WEATHER_URL, Map.class,
                 poi.getLatitud(), poi.getLongitud(), apiKey);
@@ -61,12 +62,11 @@ public class PoiService {
         String descripcionClima = weatherList.get(0).get("description").toString();
         String climaPrincipal = weatherList.get(0).get("main").toString().toLowerCase();
 
-        // 3. Búsqueda de Hoteles Y Restaurantes por la CIUDAD del POI
-        // Asegúrate de que los nombres de los métodos coincidan con tus Repositories
+        // Búsqueda de Hoteles Y Restaurantes por la CIUDAD del POI
         List<Hotel> hoteles = hotelRepository.findByCiudadIgnoreCase(poi.getCiudad());
         List<Restaurant> restaurantes = restaurantRepository.findByCityIgnoreCase(poi.getCiudad());
 
-        // 4. Montaje del DTO
+        // Montaje del DTO
         PoiResponseDTO dto = new PoiResponseDTO();
         dto.setId(poi.getId());
         dto.setNombre(poi.getNombre());
@@ -78,7 +78,7 @@ public class PoiService {
         dto.setHotelesCercanos(hoteles);
         dto.setRestaurantesCercanos(restaurantes);
 
-        // 5. Lógica de recomendación
+        // Lógica de recomendación
         boolean esLluvia = climaPrincipal.contains("rain") || climaPrincipal.contains("drizzle");
 
         if (esLluvia) {
@@ -92,13 +92,14 @@ public class PoiService {
 
         return dto;
     }
-    // Método para actualizar un POI existente
+    /* Método para actualizar un POI existente por su ID */
     public Poi actualizar(Long id, Poi datosNuevos) {
-        // 1. Verificamos si existe antes de intentar hacer nada
+
+        // Verificamos si existe antes de intentar hacer nada
         Poi poiExistente = poiRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se puede actualizar: El POI con ID " + id + " no existe."));
 
-        // 2. Actualizamos los campos (puedes elegir cuáles permitir cambiar)
+        // Actualizamos los campos
         poiExistente.setNombre(datosNuevos.getNombre());
         poiExistente.setDescripcion(datosNuevos.getDescripcion());
         poiExistente.setCategoria(datosNuevos.getCategoria());
@@ -107,11 +108,11 @@ public class PoiService {
         poiExistente.setLongitud(datosNuevos.getLongitud());
         poiExistente.setImageUrl(datosNuevos.getImageUrl());
 
-        // 3. Guardamos los cambios
+        // Guardamos los cambios
         return poiRepository.save(poiExistente);
     }
 
-    // Método para eliminar un POI
+    /* Método para eliminar un POI por su ID */
     public void eliminar(Long id) {
         if (!poiRepository.existsById(id)) {
             throw new RuntimeException("No se puede eliminar: El POI con ID " + id + " no existe.");
@@ -120,5 +121,14 @@ public class PoiService {
     }
     public List<Poi> buscarCercanos(double lat, double lng, double dist) {
         return poiRepository.buscarCercanos(lat, lng, dist);
+    }
+
+    /**
+     * Obtiene los POIs de una ciudad específica.
+     * @param ciudad Nombre de la ciudad a consultar.
+     * @return Lista de puntos de interés.
+     */
+    public List<Poi> listarPorCiudad(String ciudad) {
+        return poiRepository.findByCiudadIgnoreCase(ciudad);
     }
 }
