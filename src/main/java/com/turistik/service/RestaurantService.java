@@ -1,5 +1,6 @@
 package com.turistik.service;
 
+import com.turistik.model.Hotel;
 import com.turistik.model.Restaurant;
 import com.turistik.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,9 @@ public class RestaurantService {
     public Restaurant buscarPorId(Long id) {
         return restaurantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Restaurante no encontrado con ID: " + id));
+    }
+    public List<Restaurant> buscarCercanos(double lat, double lng, double dist) {
+        return restaurantRepository.buscarCercanos(lat, lng, dist);
     }
 
 }

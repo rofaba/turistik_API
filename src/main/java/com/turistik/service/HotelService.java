@@ -52,4 +52,8 @@ public class HotelService {
         return hotelRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Hotel no encontrado con ID: " + id));
     }
+
+    public List<Hotel> buscarCercanos(double lat, double lng, double dist) {
+        return hotelRepository.buscarCercanos(lat, lng, dist);
+    }
     }

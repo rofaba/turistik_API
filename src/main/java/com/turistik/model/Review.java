@@ -1,0 +1,17 @@
+package com.turistik.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Data
+public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String usuario;
+    private String comentario;
+    private int puntuacion; // 1 a 5
+    private Long targetId;  // ID del Hotel, Restaurant o POI
+    private String targetType; // "HOTEL", "RESTAURANT" o "POI"
+}

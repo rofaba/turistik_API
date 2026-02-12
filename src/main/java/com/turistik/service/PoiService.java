@@ -114,4 +114,7 @@ public class PoiService {
         }
         poiRepository.deleteById(id);
     }
+    public List<Poi> buscarCercanos(double lat, double lng, double dist) {
+        return poiRepository.buscarCercanos(lat, lng, dist);
+    }
 }
