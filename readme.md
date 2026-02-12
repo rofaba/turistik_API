@@ -1,8 +1,7 @@
-🌍 Turistik API - Gestión Turística Avanzada de Andalucía
+🌍 Turistik API - Gestión Turística de Andalucía
 =========================================================
 
-Turistik es una **API REST robusta** desarrollada con **Spring Boot** para la gestión y consulta de recursos turísticos en las provincias de Andalucía.  
-Inicialmente enfocada en las ciudades de Málaga, Granada, Sevilla y Cádiz, permite localizar hoteles, monumentos (POIs), restaurantes y actividades mediante búsquedas geoespaciales avanzadas y filtros inteligentes.
+Turistik es una **API REST robusta** desarrollada con **Spring Boot** para la gestión y consulta de recursos turísticos en las provincias de Andalucía. Inicialmente enfocada en las ciudades de *Málaga, Granada, Sevilla y Cádiz*, permite localizar hoteles, monumentos (POIs), restaurantes y actividades mediante búsquedas geoespaciales avanzadas y filtros inteligentes.
 
 🛠️ Arquitectura y Tecnologías
 ------------------------------
@@ -24,7 +23,8 @@ Para garantizar que la API y la base de datos se configuren con los registros re
 
 1.  **Clonar el repositorio:** `git clone https://github.com/rofaba/turistik_API.git`
 
-2.  **Levantar el entorno:**
+2.  **Levantar el entorno:**  
+ 
 
     Bash
 
@@ -56,29 +56,22 @@ Se ha implementado una política de seguridad basada en el principio de menor pr
 
 📍 Endpoints del Sistema
 ------------------------
+### 📍 Catálogo Completo de Endpoints
 
-| **Recurso** | **Método** | **Endpoint** | **Descripción** |
-| --- | --- | --- | --- |
-| **Búsqueda** | `GET` | `/api/v1/turismo/cerca` | **Funcionalidad Estrella:** Búsqueda combinada por radio (Haversine). |
-| **Hoteles** | `GET` | `/hoteles` |
-
-Listado completo de hoteles (150 registros IA).
-
-|
-| **Hoteles** | `POST` | `/hoteles` |
-
-Añadir un nuevo hotel(requiere autenticación). | | **Restaurantes** | `GET` | `/restaurantes` | Listado completo de restaurantes (150 registros IA). | | **Restaurantes** | `POST` | `/restaurantes` | Añadir un nuevo restaurante (requiere autenticación).
-
-|
-| **POIs** | `GET` | `/pois` | 
-
-Listar puntos de interés (museos, monumentos)(150 registros IA). | | **POIs** | `POST` | `/pois` | Añadir un nuevo punto de interés (requiere autenticación).
-
-|
-| **Actividades** | `GET` | `/actividades` | 
-
-Listar planes con metadatos de clima (`exterior`). (150 registros IA). | | **Actividades** | `POST` | `/actividades` | Añadir una nueva actividad (requiere autenticación).
-
+| Recurso Principal | Método | Endpoint | Descripción | Acceso |
+| :--- | :--- | :--- | :--- | :--- |
+| **Turismo (Global)** | `GET` | `/api/v1/turismo/cerca` | **Búsqueda Geoespacial:** Hoteles, POIs, Restaurantes y Actividades en un radio. | **Público** |
+| **Hoteles** | `GET` | `/hoteles` | Listado completo de hoteles (Sevilla, Málaga, Granada, Cádiz, etc.). | **Público** |
+| **Hoteles** | `GET` | `/hoteles/{id}` | Obtener detalles completos de un hotel específico. | **Público** |
+| **Hoteles** | `POST` | `/hoteles` | Registrar un nuevo establecimiento (Ej: Hotel ME Málaga Piqué). | 🔒 **Admin** |
+| **Hoteles** | `PUT` | `/hoteles/{id}` | Actualizar precios o estrellas de un hotel. | 🔒 **Admin** |
+| **Hoteles** | `DELETE` | `/hoteles/{id}` | Eliminar un registro de hotel. | 🔒 **Admin** |
+| **Restaurantes** | `GET` | `/restaurantes` | Listar toda la oferta gastronómica (150 registros). | **Público** |
+| **Restaurantes** | `POST` | `/restaurantes` | Añadir un nuevo restaurante al catálogo. | 🔒 **Admin** |
+| **Puntos Interés** | `GET` | `/pois` | Listar monumentos, museos y parques andaluces. | **Público** |
+| **Puntos Interés** | `POST` | `/pois` | Dar de alta un nuevo monumento. | 🔒 **Admin** |
+| **Actividades** | `GET` | `/actividades` | Listar planes de ocio, tours y talleres. | **Público** |
+| **Actividades** | `POST` | `/actividades` | Crear una nueva oferta de actividad turística. | 🔒 **Admin** |
 🌟 Mejoras e Innovación (Sección 20%)
 -------------------------------------
 
@@ -97,12 +90,14 @@ Este proyecto incluye funcionalidades avanzadas que mejoran la experienciadel us
 
 -   `src/main/java`: Código fuente documentado con Javadoc.
 
--   `src/main/resources/data.sql`: Script de carga masiva de datos (Hoteles, POIs, Restaurantes, Actividades).
+-   `src/main/resources/data.sql`: Script de carga de datos (Hoteles, POIs, Restaurantes, Actividades).
 
 -   `docker-compose.yml`: Orquestación de contenedores (App + DB).
 
 * * * * *
 
-**Autor:** [RODRIGO FAURE]
+**Autor:** RODRIGO FAURE
 
-**Asignatura:** Acceso a Datos (AD) Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) **Curso:** 2024-2026
+**Asignatura:** Acceso a Datos (AD)  
+Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)  
+**Curso:** 2024-2026
