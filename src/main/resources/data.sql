@@ -162,72 +162,38 @@ INSERT INTO restaurant (name, city, cuisine_type, rating, address, average_price
                                                                                                          ('Restaurante Carmen de Aben Humeya', 'Granada', 'Vistas Alhambra', 4.7, 'Calle Convalecientes', 65.0, 37.1815, -3.5920),
                                                                                                          ('El Trillo', 'Granada', 'Cocina de Jardin', 4.6, 'Callejon de las Tomasas', 50.0, 37.1810, -3.5912),
                                                                                                          ('Bar Diamantes', 'Granada', 'Pescaito Frito Tapas', 4.5, 'Calle Navas', 18.0, 37.1738, -3.5985);
+-- =============================================================================
+-- 4. ACTIVIDADES - 20 REGISTROS (5 POR CIUDAD)
+-- =============================================================================
 
--- =============================================================================
--- NUEVOS POIs - CÓRDOBA
--- =============================================================================
-INSERT INTO pois (nombre, descripcion, categoria, ciudad, latitud, longitud, image_url) VALUES
-                                                                                            ('Puente Romano de Córdoba', 'Puente histórico sobre el río Guadalquivir.', 'Puente', 'Córdoba', 37.8789, -4.7794, 'https://bit.ly/cordoba-puente'),
-                                                                                            ('Alcázar de los Reyes Cristianos', 'Fortaleza medieval con jardines históricos.', 'Monumento', 'Córdoba', 37.8776, -4.7816, 'https://bit.ly/cordoba-alcazar'),
-                                                                                            ('Medina Azahara', 'Ciudad palatina califal del siglo X.', 'Monumento', 'Córdoba', 37.8850, -4.8675, 'https://bit.ly/medina-azahara'),
-                                                                                            ('Templo Romano de Córdoba', 'Restos arqueológicos romanos en el centro.', 'Monumento', 'Córdoba', 37.8905, -4.7792, 'https://bit.ly/templo-romano'),
-                                                                                            ('Palacio de Viana', 'Palacio con famosos patios cordobeses.', 'Palacio', 'Córdoba', 37.8926, -4.7765, 'https://bit.ly/viana'),
-                                                                                            ('Torre de la Calahorra', 'Torre defensiva convertida en museo.', 'Monumento', 'Córdoba', 37.8792, -4.7768, 'https://bit.ly/calahorra'),
-                                                                                            ('Plaza de la Corredera', 'Plaza mayor porticada histórica.', 'Plaza', 'Córdoba', 37.8877, -4.7749, 'https://bit.ly/corredera'),
-                                                                                            ('Cristo de los Faroles', 'Escultura emblemática iluminada por faroles.', 'Monumento', 'Córdoba', 37.8923, -4.7822, 'https://bit.ly/faroles'),
-                                                                                            ('Judería de Córdoba', 'Barrio histórico de calles estrechas.', 'Barrio', 'Córdoba', 37.8798, -4.7790, 'https://bit.ly/juderia'),
-                                                                                            ('Museo Julio Romero de Torres', 'Museo dedicado al famoso pintor cordobés.', 'Museo', 'Córdoba', 37.8870, -4.7745, 'https://bit.ly/romero');
+-- SEVILLA
+INSERT INTO activity (nombre, descripcion, precio, duracion, ciudad, latitud, longitud, exterior) VALUES
+                                                                                                      ('Tour de Misterios', 'Recorrido nocturno por leyendas de Sevilla.', 15.0, '2h', 'Sevilla', 37.3858, -5.9918, true),
+                                                                                                      ('Paseo en Coche de Caballos', 'Tour clasico por el Parque Maria Luisa.', 45.0, '45min', 'Sevilla', 37.3770, -5.9870, true),
+                                                                                                      ('Espectaculo Flamenco', 'Show en directo en el barrio de Triana.', 25.0, '1.5h', 'Sevilla', 37.3850, -6.0010, false),
+                                                                                                      ('Crucero por el Guadalquivir', 'Vistas de la ciudad desde el rio.', 18.0, '1h', 'Sevilla', 37.3824, -5.9964, true),
+                                                                                                      ('Taller de Tapas', 'Aprende a cocinar platos tipicos.', 50.0, '3h', 'Sevilla', 37.3940, -5.9920, false);
 
--- =============================================================================
--- NUEVOS POIs - RONDA
--- =============================================================================
-INSERT INTO pois (nombre, descripcion, categoria, ciudad, latitud, longitud, image_url) VALUES
-                                                                                            ('Puente Nuevo', 'Puente icónico sobre el Tajo de Ronda.', 'Puente', 'Ronda', 36.7429, -5.1677, 'https://bit.ly/puente-nuevo'),
-                                                                                            ('Plaza de Toros de Ronda', 'Una de las plazas más antiguas de España.', 'Cultura', 'Ronda', 36.7421, -5.1670, 'https://bit.ly/toros-ronda'),
-                                                                                            ('Baños Árabes de Ronda', 'Complejo termal medieval bien conservado.', 'Monumento', 'Ronda', 36.7397, -5.1631, 'https://bit.ly/banos-ronda'),
-                                                                                            ('Casa del Rey Moro', 'Palacio histórico con mina subterránea.', 'Monumento', 'Ronda', 36.7424, -5.1665, 'https://bit.ly/rey-moro'),
-                                                                                            ('Mirador de Aldehuela', 'Mirador con vistas espectaculares del puente.', 'Mirador', 'Ronda', 36.7427, -5.1674, 'https://bit.ly/aldehuela'),
-                                                                                            ('Palacio de Mondragón', 'Palacio renacentista con museo.', 'Palacio', 'Ronda', 36.7420, -5.1645, 'https://bit.ly/mondragon'),
-                                                                                            ('Murallas de Ronda', 'Restos defensivos medievales.', 'Monumento', 'Ronda', 36.7425, -5.1635, 'https://bit.ly/murallas-ronda'),
-                                                                                            ('Iglesia de Santa María la Mayor', 'Iglesia histórica construida sobre una mezquita.', 'Monumento', 'Ronda', 36.7421, -5.1650, 'https://bit.ly/santamaria-ronda'),
-                                                                                            ('Alameda del Tajo', 'Parque con balcones panorámicos.', 'Parque', 'Ronda', 36.7416, -5.1683, 'https://bit.ly/alameda-ronda'),
-                                                                                            ('Puente Viejo', 'Puente medieval sobre el río Guadalevín.', 'Puente', 'Ronda', 36.7410, -5.1643, 'https://bit.ly/puente-viejo');
+-- MALAGA
+INSERT INTO activity (nombre, descripcion, precio, duracion, ciudad, latitud, longitud, exterior) VALUES
+                                                                                                      ('Tour de Picasso', 'Ruta por los lugares de infancia del pintor.', 12.0, '2h', 'Málaga', 36.7216, -4.4184, true),
+                                                                                                      ('Alquiler de Kayak', 'Remo suave por la costa de la Malagueta.', 20.0, '1h', 'Málaga', 36.7190, -4.4050, true),
+                                                                                                      ('Cata de Vinos Dulces', 'Degustacion en bodega historica.', 30.0, '1.5h', 'Málaga', 36.7218, -4.4170, false),
+                                                                                                      ('Visita Nocturna Alcazaba', 'Recorrido bajo las estrellas.', 10.0, '1h', 'Málaga', 36.7212, -4.4158, true),
+                                                                                                      ('Entrada Museo Ruso', 'Arte de las vanguardias rusas.', 9.0, '2h', 'Málaga', 36.7030, -4.4400, false);
 
--- =============================================================================
--- NUEVOS POIs - ALMERÍA
--- =============================================================================
-INSERT INTO pois (nombre, descripcion, categoria, ciudad, latitud, longitud, image_url) VALUES
-                                                                                            ('Alcazaba de Almería', 'Fortaleza musulmana de grandes dimensiones.', 'Monumento', 'Almería', 36.8381, -2.4684, 'https://bit.ly/alcazaba-almeria'),
-                                                                                            ('Catedral de Almería', 'Catedral fortaleza del siglo XVI.', 'Monumento', 'Almería', 36.8389, -2.4653, 'https://bit.ly/catedral-almeria'),
-                                                                                            ('Refugios de la Guerra Civil', 'Galerías subterráneas históricas.', 'Museo', 'Almería', 36.8398, -2.4637, 'https://bit.ly/refugios'),
-                                                                                            ('Cable Inglés', 'Antiguo cargadero de mineral junto al puerto.', 'Monumento', 'Almería', 36.8339, -2.4620, 'https://bit.ly/cable-ingles'),
-                                                                                            ('Museo de Almería', 'Museo arqueológico provincial.', 'Museo', 'Almería', 36.8355, -2.4595, 'https://bit.ly/museo-almeria'),
-                                                                                            ('Parque Nicolás Salmerón', 'Gran parque urbano junto al puerto.', 'Parque', 'Almería', 36.8390, -2.4705, 'https://bit.ly/salmeron'),
-                                                                                            ('Playa del Zapillo', 'Playa urbana popular.', 'Playa', 'Almería', 36.8235, -2.4545, 'https://bit.ly/zapillo'),
-                                                                                            ('Centro Andaluz de la Fotografía', 'Espacio cultural dedicado a la fotografía.', 'Museo', 'Almería', 36.8402, -2.4675, 'https://bit.ly/foto-almeria'),
-                                                                                            ('Cerro de San Cristóbal', 'Mirador con estatua del Sagrado Corazón.', 'Mirador', 'Almería', 36.8412, -2.4720, 'https://bit.ly/sancristobal'),
-                                                                                            ('Paseo Marítimo de Almería', 'Largo paseo costero para ocio y turismo.', 'Ocio', 'Almería', 36.8255, -2.4585, 'https://bit.ly/paseo-almeria');
+-- GRANADA
+INSERT INTO activity (nombre, descripcion, precio, duracion, ciudad, latitud, longitud, exterior) VALUES
+                                                                                                      ('Tour Albaicin y Sacromonte', 'Paseo por los barrios mas tipicos.', 15.0, '2.5h', 'Granada', 37.1811, -3.5926, true),
+                                                                                                      ('Banos Arabes Hammam', 'Relajacion en aguas termales.', 40.0, '1.5h', 'Granada', 37.1788, -3.5915, false),
+                                                                                                      ('Taller de Ceramica Taracea', 'Artesania tradicional nazari.', 35.0, '2h', 'Granada', 37.1760, -3.5980, false),
+                                                                                                      ('Senderismo Alhambra', 'Ruta por los bosques de la colina.', 0.0, '3h', 'Granada', 37.1740, -3.5850, true),
+                                                                                                      ('Noche de Cuevas', 'Zambra flamenca original.', 25.0, '1.5h', 'Granada', 37.1824, -3.5855, false);
 
-INSERT INTO hoteles (nombre, estrellas, precio_noche, direccion, tiene_piscina, ciudad, latitud, longitud) VALUES
-                                                                                                               ('Hospes Palacio del Bailio', 5, 260.0, 'Calle Ramirez de las Casas Deza 10-12', true, 'Córdoba', 37.887409, -4.777306),
-                                                                                                               ('Hotel Madinat', 4, 160.0, 'Calle Cabezas 17', false, 'Córdoba', 37.880376, -4.776741),
-                                                                                                               ('H10 Palacio Colomera', 4, 140.0, 'Plaza de las Tendillas 3', true, 'Córdoba', 37.884163, -4.779316),
-                                                                                                               ('NH Collection Amistad Cordoba', 4, 150.0, 'Plaza Maimonides 3', true, 'Córdoba', 37.879400, -4.782610),
-                                                                                                               ('Eurostars Palace', 5, 170.0, 'Paseo de la Victoria s/n', true, 'Córdoba', 37.880850, -4.785910);
-
-INSERT INTO hoteles (nombre, estrellas, precio_noche, direccion, tiene_piscina, ciudad, latitud, longitud) VALUES
-                                                                                                               ('Catalonia Ronda', 4, 180.0, 'Calle Virgen de la Paz 16', true, 'Ronda', 36.742194, -5.166361),
-                                                                                                               ('Parador de Ronda', 4, 190.0, 'Plaza de España s/n', true, 'Ronda', 36.741088, -5.166535),
-                                                                                                               ('Soho Boutique Palacio San Gabriel', 4, 160.0, 'Calle Marques de Moctezuma 19', false, 'Ronda', 36.738645, -5.165581),
-                                                                                                               ('Catalonia Reina Victoria', 4, 150.0, 'Calle Jerez 25', true, 'Ronda', 36.746939, -5.169292),
-                                                                                                               ('Hotel Montelirio', 4, 170.0, 'Calle Tenorio 8', true, 'Ronda', 36.739716, -5.166070);
-
--- =============================================================================
--- HOTELES REALES - ALMERÍA (5)
--- =============================================================================
-INSERT INTO hoteles (nombre, estrellas, precio_noche, direccion, tiene_piscina, ciudad, latitud, longitud) VALUES
-                                                                                                               ('AC Hotel Almeria by Marriott', 4, 120.0, 'Plaza Flores 5', true, 'Almería', 36.840304, -2.467785),
-                                                                                                               ('Hotel Nuevo Torreluz', 4, 95.0, 'Plaza Flores 10', false, 'Almería', 36.839995, -2.467497),
-                                                                                                               ('Hotel Catedral Almeria', 4, 130.0, 'Plaza de la Catedral 8', false, 'Almería', 36.839178, -2.465312),
-                                                                                                               ('Aire Hotel & Ancient Baths', 4, 140.0, 'Plaza de la Constitución 4', false, 'Almería', 36.838962, -2.466578),
-                                                                                                               ('Hotel Costasol', 3, 80.0, 'Paseo de Almería 58', false, 'Almería', 36.839820, -2.466410);
+-- CADIZ
+INSERT INTO activity (nombre, descripcion, precio, duracion, ciudad, latitud, longitud, exterior) VALUES
+                                                                                                      ('Tour de la Constitucion', 'Ruta por los hitos de La Pepa.', 10.0, '2h', 'Cádiz', 36.5295, -6.2925, true),
+                                                                                                      ('Avistamiento de Cetaceos', 'Salida en barco por la bahia.', 45.0, '3h', 'Cádiz', 36.5350, -6.2850, true),
+                                                                                                      ('Entrada Camara Oscura', 'Vistas en tiempo real de la ciudad.', 7.0, '45min', 'Cádiz', 36.5317, -6.2974, false),
+                                                                                                      ('Ruta Gastronomica', 'Cata de pescaos y vinos de Jerez.', 35.0, '2h', 'Cádiz', 36.5312, -6.2995, false),
+                                                                                                      ('Surf en la Victoria', 'Clase de iniciacion en la playa.', 25.0, '1.5h', 'Cádiz', 36.5050, -6.2750, true);
