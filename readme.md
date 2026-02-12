@@ -1,10 +1,10 @@
-🌍 Turistik API
-Gestión Turística Avanzada de Andalucía
+## 🌍 Turistik API
+**Gestión Turística de Varguardia de Andalucía**
 
 Turistik es una API REST de alto rendimiento diseñada para la digitalización del sector turístico andaluz.
-La plataforma centraliza la oferta turística de Málaga, Granada, Sevilla y Cádiz, permitiendo a los usuarios descubrir cada ciudad mediante una arquitectura robusta, segura y geolocalizada.
+La plataforma centraliza la oferta turística de manera inicial en las ciudades de Málaga, Granada, Sevilla y Cádiz, permitiendo a los usuarios descubrir cada ciudad mediante una arquitectura robusta, segura y geolocalizada.
 
-🛠️ Stack Tecnológico
+## 🛠️ Stack Tecnológico
 
 **Core**
 
@@ -40,32 +40,35 @@ La plataforma centraliza la oferta turística de Málaga, Granada, Sevilla y Cá
 
 - Javadoc
 
-🚀 Despliegue en 60 segundos
+## 🚀 Despliegue
 
 La API incluye un script data.sql con más de 150 registros turísticos precargados.
 
-# 1. Clonar repositorio
+### Clonar repositorio
 git clone https://github.com/rofaba/turistik_API.git
 
-# 2. Levantar infraestructura
-docker-compose down -v
-docker-compose up --build
+### Levantar infraestructura
+    Bash  
+
+    docker-compose down -v  
+
+    docker-compose up --build
 
 
-📍 Swagger UI
-http://localhost:8080/swagger-ui/index.html
+## 📍 Documentación con Swagger UI
+### http://localhost:8080/swagger-ui/index.html
 
-🔐 Modelo de Seguridad
-Nivel	    Acceso	Endpoints  
+## 🔐 Modelo de Seguridad
+    Nivel	        Acceso      Endpoints  
 
-- Público 🔓	Libre	Consultas, listados y detalles (GET)  
+    Público 🔓	Libre	    Consultas, listados y detalles (GET)  
 
-- Privado 🔒	Admin	Creación, modificación y borrado (POST, PUT, DELETE)
+    Privado 🔒	Admin	    Creación, modificación y borrado (POST, PUT, DELETE)
 
-**Credenciales Admin** : 
-admin / admin123
+### **Credenciales Admin** : admin / admin123  
 
-### 📍 Catálogo Maestro de Endpoints
+
+## 📍 Catálogo Maestro de Endpoints
 
 | Recurso | Método | Endpoint | Descripción | Acceso |
 | :--- | :---: | :--- | :--- | :---: |
@@ -94,35 +97,35 @@ admin / admin123
 | **Actividades** | `GET` | `/api/v1/actividades/buscar` | Búsqueda de planes de ocio por ciudad. | **Público** |
 | **Actividades** | `POST` | `/api/v1/actividades` | Crear una nueva oferta de actividad turística. | 🔒 **Admin** |
 
-### 🌟 **Innovaciones Destacadas**
+## 🌟 **Innovaciones Destacadas**
 
-**Smart Recommendations**  
+### **Smart Recommendations**  
 
-El endpoint /pois/{id} devuelve hoteles y restaurantes cercanos mediante DTO enriquecido.
+    El endpoint /pois/{id} devuelve hoteles y restaurantes cercanos mediante DTO enriquecido.
 
-**Arquitectura de Datos Realista**  
+### **Arquitectura de Datos Realista**  
 
-Más de 150 registros turísticos coherentes, optimizados para pruebas de geolocalización.
+    Más de 150 registros turísticos coherentes, optimizados para pruebas de geolocalización.
 
-**Resiliencia**  
+### **Resiliencia**  
 
-Manejo centralizado de errores con @ControllerAdvice garantizando respuestas consistentes.
+    Manejo centralizado de errores con @ControllerAdvice garantizando respuestas consistentes.
 
-### 📁 Estructura del Proyecto  
+## 📁 Estructura del Proyecto  
 
-- src/main/java        → Lógica de negocio (Layered Architecture)  
+    - src/main/java        → Lógica de negocio (Layered Architecture)  
 
-- src/main/resources   → Configuración y carga SQL  
+    - src/main/resources   → Configuración y carga SQL  
 
-- docker-compose.yml   → Infraestructura  
+    - docker-compose.yml   → Infraestructura  
 
 
 ### 👨‍💻 Autor
 
-**Rodrigo Faure Bascur**  
+- **Rodrigo Faure Bascur**  
 
-**Ciclo:** Desarrollo de Aplicaciones Multiplataforma (DAM) 24-26 
+- **Ciclo:** Desarrollo de Aplicaciones Multiplataforma (DAM) 24-26 
 
-**Asignatura:** Acceso a Datos (AD)  
+- **Asignatura:** Acceso a Datos (AD)  
 
-**Docente** : Francisco Romero Guillén
+- **Docente** : Francisco Romero Guillén
