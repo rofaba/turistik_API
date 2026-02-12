@@ -68,7 +68,7 @@ public class PoiService {
         dto.setNombre(poi.getNombre());
         dto.setCategoria(poi.getCategoria());
         dto.setDescripcion(poi.getDescripcion());
-        dto.setImagenUrl(poi.getImage_url());
+        dto.setImagenUrl(poi.getImageUrl());
         dto.setClimaActual(descripcionClima + ", " + temp + "°C");
 
         dto.setHotelesCercanos(hoteles);
@@ -101,7 +101,7 @@ public class PoiService {
         poiExistente.setCiudad(datosNuevos.getCiudad());
         poiExistente.setLatitud(datosNuevos.getLatitud());
         poiExistente.setLongitud(datosNuevos.getLongitud());
-        poiExistente.setImage_url(datosNuevos.getImage_url());
+        poiExistente.setImageUrl(datosNuevos.getImageUrl());
 
         // 3. Guardamos los cambios
         return poiRepository.save(poiExistente);

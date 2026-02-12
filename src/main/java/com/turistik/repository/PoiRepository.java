@@ -14,11 +14,11 @@ import java.util.List;
 @Repository
 public interface PoiRepository extends JpaRepository<Poi, Long> {
 
-    @Query(value = "SELECT id, nombre, descripcion, categoria, ciudad, latitud, longitud, " +
-            "image_url AS imageUrl " +
-            "FROM pois p WHERE " +
+    @Query(value = "SELECT * FROM pois p WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(p.latitud)) * " +
             "cos(radians(p.longitud) - radians(:lng)) + sin(radians(:lat)) * " +
             "sin(radians(p.latitud)))) <= :distancia",
             nativeQuery = true)
-    List<Poi> buscarCercanos(@Param("lat") double lat, @Param("lng") double lng, @Param("distancia") double distancia);}
+    List<Poi> buscarCercanos(@Param("lat") double lat, @Param("lng") double lng, @Param("distancia") double distancia);
+
+}

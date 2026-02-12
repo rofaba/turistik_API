@@ -21,7 +21,7 @@ public class TurismoController {
     public ResponseEntity<Map<String, Object>> getCercanos(
             @RequestParam double lat,
             @RequestParam double lng,
-            @RequestParam(defaultValue = "2.0") double distancia) {
+            @RequestParam(defaultValue = "2.0") double distancia) { //2km por defecto
 
         return ResponseEntity.ok(turismoService.obtenerTodoCerca(lat, lng, distancia));
     }

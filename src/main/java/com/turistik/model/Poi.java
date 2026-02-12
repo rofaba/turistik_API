@@ -25,15 +25,16 @@ public class Poi {
     @Size(max = 1000, message = "La descripción es demasiado larga")
     private String descripcion;
 
-    @DecimalMin(value = "-90.0") @DecimalMax(value = "90.0")
+    @Column(name = "latitud")
     private Double latitud;
 
-    @DecimalMin(value = "-180.0") @DecimalMax(value = "180.0")
+    @Column(name = "longitud")
     private Double longitud;
 
     private String categoria;
 
-    private String image_url;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     private String ciudad;
 }

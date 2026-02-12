@@ -1,10 +1,7 @@
 package com.turistik.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.Data;
-import jakarta.persistence.Id;
 
 @Entity
 @Data
@@ -14,8 +11,15 @@ public class Restaurant {
     private Long id;
     private String name;
     private String city;
+
     private String cuisineType;
     private Double rating;
     private String address;
     private Double averagePrice;
+
+    @Column(name = "latitud")
+    private Double latitud;
+
+    @Column(name = "longitud")
+    private Double longitud;
 }

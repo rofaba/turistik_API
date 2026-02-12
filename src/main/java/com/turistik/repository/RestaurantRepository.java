@@ -16,9 +16,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> findByCityIgnoreCaseAndCuisineTypeIgnoreCase(String city, String cuisine);
     List<Restaurant> findByCityIgnoreCaseAndRatingGreaterThanEqual(String city, Double rating);
 
-    @Query(value = "SELECT id, name, city, address, rating, " +
-            "cuisine_type AS cuisineType, average_price AS averagePrice " +
-            "FROM restaurant r WHERE " +
+    @Query(value = "SELECT * FROM restaurant r WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(r.latitud)) * " +
             "cos(radians(r.longitud) - radians(:lng)) + sin(radians(:lat)) * " +
             "sin(radians(r.latitud)))) <= :distancia",

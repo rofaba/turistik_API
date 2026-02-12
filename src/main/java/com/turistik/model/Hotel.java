@@ -16,6 +16,7 @@ public class Hotel {
 
     private int estrellas; // calificaciones de 1 a 5
 
+    @Column(name = "precio_noche")
     private double precioNoche;
 
     private String direccion;
@@ -23,5 +24,11 @@ public class Hotel {
     private boolean tienePiscina;
 
     private String ciudad;
+
+    @Column(name = "latitud")
+    private Double latitud;
+
+    @Column(name = "longitud")
+    private Double longitud;
 
 }

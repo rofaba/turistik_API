@@ -14,7 +14,13 @@ public class Activity {
     private Double precio;
     private String duracion;
     private String ciudad;
+
+    @Column(name = "latitud")
     private Double latitud;
+
+    @Column(name = "longitud")
     private Double longitud;
+
+
     private boolean exterior; // Para validar con el clima
 }

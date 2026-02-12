@@ -10,8 +10,7 @@ import java.util.List;
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
     List<Hotel> findByCiudadIgnoreCase(String ciudad);
 
-    @Query(value = "SELECT id, nombre, estrellas, precio_noche, direccion, tiene_piscina, ciudad, latitud, longitud " +
-            "FROM hoteles h WHERE " +
+    @Query(value = "SELECT * FROM hoteles h WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(h.latitud)) * " +
             "cos(radians(h.longitud) - radians(:lng)) + sin(radians(:lat)) * " +
             "sin(radians(h.latitud)))) <= :distancia",
