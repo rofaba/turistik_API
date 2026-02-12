@@ -14,12 +14,23 @@ import java.util.List;
 @Repository
 public interface PoiRepository extends JpaRepository<Poi, Long> {
 
+    /**
+     * Realiza una búsqueda geoespacial de puntos de interés utilizando la fórmula de Haversine.
+     * * Esta consulta nativa calcula la distancia ortodrómica entre un punto dado (lat, lng)
+     * y cada registro en la base de datos basándose en la curvatura terrestre (radio medio de 6371 km).
+     *
+     * @param lat       Latitud del punto de origen en grados decimales.
+     * @param lng       Longitud del punto de origen en grados decimales.
+     * @param distancia Radio máximo de búsqueda expresado en kilómetros (km).
+     * @return          Una lista de entidades {@link Poi} que se encuentran dentro del radio especificado.
+     */
 
     @Query(value = "SELECT * FROM pois p WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(p.latitud)) * " +
             "cos(radians(p.longitud) - radians(:lng)) + sin(radians(:lat)) * " +
             "sin(radians(p.latitud)))) <= :distancia",
             nativeQuery = true)
+
     /**
      * Recupera una lista de puntos de interés cercanos a una ubicación dada.
      * @param lat Latitud del punto de referencia.

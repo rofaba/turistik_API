@@ -1,105 +1,128 @@
-🌍 Turistik API - Gestión Turística de Andalucía
-=========================================================
+🌍 Turistik API
+Gestión Turística Avanzada de Andalucía
 
-Turistik es una **API REST robusta** desarrollada con **Spring Boot** para la gestión y consulta de recursos turísticos en las provincias de Andalucía. Inicialmente enfocada en las ciudades de *Málaga, Granada, Sevilla y Cádiz*, permite localizar hoteles, monumentos (POIs), restaurantes y actividades mediante búsquedas geoespaciales avanzadas y filtros inteligentes.
+Turistik es una API REST de alto rendimiento diseñada para la digitalización del sector turístico andaluz.
+La plataforma centraliza la oferta turística de Málaga, Granada, Sevilla y Cádiz, permitiendo a los usuarios descubrir cada ciudad mediante una arquitectura robusta, segura y geolocalizada.
 
-🛠️ Arquitectura y Tecnologías
-------------------------------
+🛠️ Stack Tecnológico
 
--   **Backend:** Java 17 con Spring Boot.
+**Core**
 
--   **Persistencia:** JPA / Hibernate con base de datos **PostgreSQL**.
+- Java 17
 
--   **Contenedores:** Despliegue completo mediante **Docker y Docker Compose**.
+- Spring Boot 4.0.2
 
--   **Seguridad:** Spring Security con **Autenticación Básica** para operaciones de escritura.
+**Data Layer**
 
--   **Documentación:** Swagger UI (OpenAPI 3.0) y **Javadoc** exhaustivo en todo el código.
+- PostgreSQL
 
-🚀 Instalación y Despliegue (Docker)
-------------------------------------
+- JPA / Hibernate
 
-Para garantizar que la API y la base de datos se configuren con los registros reales cargados estratégicamente, sigue estos pasos:
+**Geolocalización**
 
-1.  **Clonar el repositorio:** `git clone https://github.com/rofaba/turistik_API.git`
+- Implementación nativa de la Fórmula de Haversine para cálculo de distancias geográficas.
 
-2.  **Levantar el entorno:**  
- 
+**Seguridad**
 
-    Bash
+- Spring Security
+- Basic Authentication
+- CSRF deshabilitado para entorno API
 
-    ```
-    docker-compose down -v && docker-compose up --build
+**Infraestructura**
 
-    ```
+- Docker
 
-    *Nota: El flag `-v` asegura que el volumen se cree limpio con toda la data actualizada.*
+- Docker Compose
 
-    
+**Documentación**
 
-3.  **Acceder a la API:** La documentación interactiva y el testeo se realizan desde:
+- Swagger UI (OpenAPI 3.1)
 
-    📍 [http://localhost:8080/swagger-ui/index.html#/)
+- Javadoc
 
-🔐 Seguridad y Acceso
----------------------
+🚀 Despliegue en 60 segundos
 
-Se ha implementado una política de seguridad basada en el principio de menor privilegio:
+La API incluye un script data.sql con más de 150 registros turísticos precargados.
 
--   **Lectura (Pública):** Todos los endpoints `GET` son accesibles para turistas.
+# 1. Clonar repositorio
+git clone https://github.com/rofaba/turistik_API.git
 
--   **Escritura (Protegida):** Los métodos `POST`, `PUT` y `DELETE` requieren credenciales de administrador.
+# 2. Levantar infraestructura
+docker-compose down -v
+docker-compose up --build
 
-    -   **Usuario:** `admin`
 
-    -   **Contraseña:** `admin123`
+📍 Swagger UI
+http://localhost:8080/swagger-ui/index.html
 
-📍 Endpoints del Sistema
-------------------------
-### 📍 Catálogo Completo de Endpoints
+🔐 Modelo de Seguridad
+Nivel	    Acceso	Endpoints  
 
-| Recurso Principal | Método    | Endpoint                | Descripción                                                                      | Acceso |
-| :--- |:----------|:------------------------|:---------------------------------------------------------------------------------| :--- |
-| **Turismo (Global)** | `GET`     | `/api/v1/turismo/cerca` | **Búsqueda Geoespacial:** Hoteles, POIs, Restaurantes y Actividades en un radio. | **Público** |
-| **Hoteles** | `GET`     | `/hoteles`              | Listado completo de hoteles (Sevilla, Málaga, Granada, Cádiz, etc.).             | **Público** |
-| **Hoteles** | `GET`     | `/hoteles/{id}`         | Obtener detalles completos de un hotel específico.                               | **Público** |
-| **Hoteles** | `POST`    | `/hoteles`              | Registrar un nuevo establecimiento (Ej: Hotel ME Málaga Piqué).                  | 🔒 **Admin** |
-| **Hoteles** | `PUT`     | `/hoteles/{id}`         | Actualizar precios o estrellas de un hotel.                                      | 🔒 **Admin** |
-| **Hoteles** | `DELETE`  | `/hoteles/{id}`         | Eliminar un registro de hotel.                                                   | 🔒 **Admin** |
-| **Restaurantes** | `GET`     | `/restaurantes`         | Listar toda la oferta gastronómica (150 registros).                              | **Público** |
-| **Restaurantes** | `POST`    | `/restaurantes`         | Añadir un nuevo restaurante al catálogo.                                         | 🔒 **Admin** |
-| **Puntos Interés** | `GET`     | `/pois`                 | Listar monumentos, museos y parques andaluces.                                   | **Público** |
-| **Puntos Interés** | `POST`    | `/pois`                 | Dar de alta un nuevo monumento.                                                  | 🔒 **Admin** |
-| **Puntos Interés** | `GET` | `/ciudad`           | LIstar pois por ciudad determinada                | 🔒 **Admin** |
-| **Actividades** | `GET` | `/actividades` | Listar planes de ocio, tours y talleres. | **Público** |
-| **Actividades** | `POST` | `/actividades` | Crear una nueva oferta de actividad turística. | 🔒 **Admin** |
+- Público 🔓	Libre	Consultas, listados y detalles (GET)  
 
-🌟 Mejoras e Innovación
--------------------------------------
+- Privado 🔒	Admin	Creación, modificación y borrado (POST, PUT, DELETE)
 
-Este proyecto incluye funcionalidades avanzadas que mejoran la experienciadel usuario y la calidad de los datos, destacando:
+**Credenciales Admin** : 
+admin / admin123
 
-1.  **Filtros Inteligentes de Clima:** Las actividades incluyen un campo `exterior` (booleano) que permite a la API sugerir planes basándose en el pronóstico meteorológico (Indoor/Outdoor).
+### 📍 Catálogo Maestro de Endpoints
 
-2.  **Geolocalización Real:** Implementación de la fórmula de **Haversine** en consultas nativas SQL para calcular distancias reales sobre la curvatura terrestre.
+| Recurso | Método | Endpoint | Descripción | Acceso |
+| :--- | :---: | :--- | :--- | :---: |
+| **Turismo** | `GET` | `/api/v1/turismo/cerca` | **Haversine Engine:** Búsqueda combinada por radio. | **Público** |
+| **Hoteles** | `GET` | `/api/v1/hoteles` | Listado global de todos los hoteles. | **Público** |
+| **Hoteles** | `GET` | `/api/v1/hoteles/{id}` | Ficha técnica detallada de un hotel por ID. | **Público** |
+| **Hoteles** | `GET` | `/api/v1/hoteles/buscar` | Filtrado dinámico por ciudad (`?ciudad=...`). | **Público** |
+| **Hoteles** | `POST` | `/api/v1/hoteles` | Registro de nuevos hoteles. | 🔒 **Admin** |
+| **Hoteles** | `PUT` | `/api/v1/hoteles/{id}` | Actualización completa de datos de un hotel. | 🔒 **Admin** |
+| **Hoteles** | `DELETE` | `/api/v1/hoteles/{id}` | Eliminación física del registro de hotel. | 🔒 **Admin** |
+| **POIs** | `GET` | `/api/v1/pois` | Listado de monumentos, museos y parques. | **Público** |
+| **POIs** | `GET` | `/api/v1/pois/{id}` | **Smart POI:** Detalle con clima y recomendaciones. | **Público** |
+| **POIs** | `GET` | `/api/v1/pois/{ciudad}` | Filtro administrativo por nombre de ciudad. | **Público** |
+| **POIs** | `POST` | `/api/v1/pois` | Crear un nuevo punto de interés. | 🔒 **Admin** |
+| **POIs** | `PUT` | `/api/v1/pois/{id}` | Modificar información de un monumento. | 🔒 **Admin** |
+| **POIs** | `DELETE` | `/api/v1/pois/{id}` | Borrar un monumento del sistema. | 🔒 **Admin** |
+| **Restaurantes** | `GET` | `/api/restaurants` | Guía gastronómica completa de Andalucía. | **Público** |
+| **Restaurantes** | `GET` | `/api/restaurants/{id}` | Detalle de restaurante específico por ID. | **Público** |
+| **Restaurantes** | `GET` | `/api/restaurants/buscar` | Búsqueda rápida por ciudad (`?city=...`). | **Público** |
+| **Restaurantes** | `GET` | `/api/restaurants/top` | **Ranking:** Los mejores valorados por ciudad. | **Público** |
+| **Restaurantes** | `GET` | `/api/restaurants/cocina` | **Filtro Gourmet:** Por ciudad y tipo de cocina. | **Público** |
+| **Restaurantes** | `POST` | `/api/restaurants` | Añadir nuevo restaurante al catálogo. | 🔒 **Admin** |
+| **Restaurantes** | `PUT` | `/api/restaurants/{id}` | Actualizar datos de un restaurante existente. | 🔒 **Admin** |
+| **Restaurantes** | `DELETE` | `/api/restaurants/{id}` | Eliminar restaurante del sistema. | 🔒 **Admin** |
+| **Actividades** | `GET` | `/api/v1/actividades` | Catálogo completo de tours y experiencias. | **Público** |
+| **Actividades** | `GET` | `/api/v1/actividades/buscar` | Búsqueda de planes de ocio por ciudad. | **Público** |
+| **Actividades** | `POST` | `/api/v1/actividades` | Crear una nueva oferta de actividad turística. | 🔒 **Admin** |
 
-3.  **Gestión de Errores Profesional:** Uso de `@ControllerAdvice` para capturar excepciones y devolver respuestas estandarizadas en JSON (401 Unauthorized, 404 Not Found, etc.).
+### 🌟 **Innovaciones Destacadas**
 
-4.  **Data Realista:** Población de base de datos con 150 registros coherentes generados mediante herramientas de IA y datos abiertos de portales oficiales.
+**Smart Recommendations**  
 
-📁 Estructura del Proyecto
---------------------------
+El endpoint /pois/{id} devuelve hoteles y restaurantes cercanos mediante DTO enriquecido.
 
--   `src/main/java`: Código fuente documentado con Javadoc.
+**Arquitectura de Datos Realista**  
 
--   `src/main/resources/data.sql`: Script de carga de datos (Hoteles, POIs, Restaurantes, Actividades).
+Más de 150 registros turísticos coherentes, optimizados para pruebas de geolocalización.
 
--   `docker-compose.yml`: Orquestación de contenedores (App + DB).
+**Resiliencia**  
 
-* * * * *
+Manejo centralizado de errores con @ControllerAdvice garantizando respuestas consistentes.
 
-**Autor:** RODRIGO FAURE
+### 📁 Estructura del Proyecto  
+
+- src/main/java        → Lógica de negocio (Layered Architecture)  
+
+- src/main/resources   → Configuración y carga SQL  
+
+- docker-compose.yml   → Infraestructura  
+
+
+### 👨‍💻 Autor
+
+**Rodrigo Faure Bascur**  
+
+**Ciclo:** Desarrollo de Aplicaciones Multiplataforma (DAM) 24-26 
 
 **Asignatura:** Acceso a Datos (AD)  
-Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)  
-**Curso:** 2024-2026
+
+**Docente** : Francisco Romero Guillén
