@@ -29,16 +29,16 @@ public class PoiController {
         return poiService.obtenerTodos();
     }
 
+    // En PoiController.java
+
     /**
-     * Endpoint para obtener todos los puntos de interés de una ciudad.
-     * Acceso: Público.
+     * Busca puntos de interés filtrados por ciudad.
      * @param ciudad Nombre de la ciudad.
-     * @return ResponseEntity con la lista de POIs.
+     * @return Lista de POIs en esa ubicación.
      */
-    @GetMapping("/{ciudad}")
+    @GetMapping("/ciudad/{ciudad}") // Cambiamos la ruta para evitar el conflicto
     public ResponseEntity<List<Poi>> getPoisPorCiudad(@PathVariable String ciudad) {
-        List<Poi> pois = poiService.listarPorCiudad(ciudad);
-        return ResponseEntity.ok(pois);
+        return ResponseEntity.ok(poiService.listarPorCiudad(ciudad));
     }
 
     /**
